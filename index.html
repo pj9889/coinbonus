@@ -2,186 +2,134 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium App Gallery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Premium Gaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { height: 100%; overflow: hidden; width: 100%; }
         body {
             background: url('pic1.webp') no-repeat center center fixed;
             background-size: cover;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             font-family: 'Poppins', sans-serif;
-            padding: 20px;
         }
-
-        /* অ্যাপ গ্রিড লেআউট (মোবাইল অ্যাপ বক্সের মতো) */
+        .main-wrapper {
+            width: 95%;
+            max-width: 360px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 85vh;
+        }
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* মোবাইলের জন্য ২ কলাম */
-            gap: 20px;
-            max-width: 400px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            width: 100%;
         }
-
-        /* প্রিমিয়াম গেম বক্স */
         .app-box {
             position: relative;
-            width: 140px;
-            height: 140px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 20px;
+            aspect-ratio: 1/1;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            /* হলুদ চিকন আউটলাইন */
-            border: 1px solid rgba(255, 204, 0, 0.5);
+            border: 1px solid rgba(255, 204, 0, 0.4);
         }
-
-        /* লাল রশ্মি চলমান এনিমেশন */
         .app-box::before {
             content: '';
             position: absolute;
-            width: 150%;
-            height: 150%;
+            width: 160%;
+            height: 160%;
             background: conic-gradient(transparent, transparent, transparent, #ff0000);
-            animation: rotate 3s linear infinite;
+            animation: rotate 2s linear infinite;
         }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .app-box::after {
             content: '';
             position: absolute;
-            inset: 3px;
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 18px;
+            inset: 2px;
+            background: rgba(0, 0, 0, 0.95);
+            border-radius: 10px;
         }
-
-        /* গেম ইমেজ বা শাইনিং ইফেক্ট */
         .game-content {
             position: relative;
             z-index: 2;
-            width: 80%;
-            height: 80%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #ffcc00;
-            text-align: center;
-            animation: shining 2s infinite alternate;
+            width: 85%;
+            height: 85%;
+            animation: shining 1.5s infinite alternate;
         }
-
-        .game-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        @keyframes shining {
-            from { filter: drop-shadow(0 0 2px #ffcc00); }
-            to { filter: drop-shadow(0 0 10px #ffcc00); }
-        }
-
-        /* নিচের সেই স্পেশাল বাটন */
+        .game-content img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+        @keyframes shining { from { filter: drop-shadow(0 0 1px #ffcc00); } to { filter: drop-shadow(0 0 8px #ffcc00); } }
         .special-btn {
             position: relative;
-            width: 280px;
-            padding: 18px;
-            font-size: 22px;
+            width: 100%;
+            padding: 20px;
+            font-size: 24px;
             font-weight: 800;
             color: #fff;
             background: #ff0000;
             border: none;
-            border-radius: 50px;
+            border-radius: 15px;
             cursor: pointer;
             overflow: hidden;
-            transition: 0.3s;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            margin-top: auto;
         }
-
-        /* বাটনে ক্লিক করার পর স্টেট */
         .special-btn.clicked {
             background: #ffcc00 !important;
             color: #000 !important;
             box-shadow: 0 0 30px #ffcc00;
         }
-
-        /* বাটন লোডিং বার */
-        .btn-loading-bar {
+        .loading-overlay {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 5px;
-            width: 0;
-            background: #000;
-            transition: width 3s linear;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.1);
         }
-
-        .special-btn.clicked .btn-loading-bar {
-            width: 100%;
-        }
-
+        .special-btn.clicked .loading-overlay { animation: fill 2s linear forwards; }
+        @keyframes fill { 0% { left: -100%; } 100% { left: 0%; } }
     </style>
 </head>
 <body>
 
-    <div class="app-grid">
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g1.webp" alt="G1"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g2.webp" alt="G2"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g3.webp" alt="G3"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g4.webp" alt="G4"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g5.webp" alt="G5"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g6.webp" alt="G6"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g7.webp" alt="G7"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g8.webp" alt="G8"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g9.webp" alt="G9"></div></div>
-        <div class="app-box" onclick="handleGameClick()"><div class="game-content"><img src="g10.webp" alt="G10"></div></div>
-    </div>
+    <div class="main-wrapper">
+        <div style="font-family: 'Orbitron'; color: #ffcc00; letter-spacing: 2px;">ELITE GAMES</div>
 
-    <button class="special-btn" id="mainBtn" onclick="activateLoading()">
-        খে লা শুরু করুন
-        <div class="btn-loading-bar"></div>
-    </button>
+        <div class="app-grid">
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g1.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g2.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g3.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g4.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g5.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g6.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g7.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g8.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g9.webp"></div></div>
+            <div class="app-box" onclick="goToSite()"><div class="game-content"><img src="g10.webp"></div></div>
+        </div>
+
+        <button class="special-btn" id="mainBtn" onclick="goToSite()">
+            খে লা শুরু করুন
+            <div class="loading-overlay"></div>
+        </button>
+    </div>
 
     <script>
         const MAIN_URL = "https://12xbet.pages.dev/";
-
-        // বাটনের ফাংশন
-        function activateLoading() {
+        function goToSite() {
             const btn = document.getElementById('mainBtn');
             btn.classList.add('clicked');
-            
-            // লোডিং শেষ হলে রিডাইরেক্ট (৩ সেকেন্ড পর)
-            setTimeout(() => {
-                window.location.replace(MAIN_URL);
-            }, 3000);
+            window.location.href = MAIN_URL;
         }
-
-        // গেম বক্সে ক্লিক করলে একই কাজ হবে
-        function handleGameClick() {
-            activateLoading();
-        }
-
-        // অটো রিডাইরেক্ট ৫ সেকেন্ড পর (সাইলেন্ট)
-        setTimeout(() => {
-            if(!document.getElementById('mainBtn').classList.contains('clicked')) {
-                window.location.replace(MAIN_URL);
-            }
-        }, 5000);
     </script>
 </body>
 </html>
